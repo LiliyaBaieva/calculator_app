@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Calculator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <style>
+        body { background-color: #000; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .calc-body { width: 320px; background: #000; padding: 20px; border-radius: 40px; }
+        .screen { text-align: right; font-size: 3rem; margin-bottom: 20px; padding-right: 10px; overflow: hidden; }
+        .btn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        button { border: none; border-radius: 50%; height: 65px; width: 65px; font-size: 1.5rem; font-weight: 500; cursor: pointer; transition: 0.2s; }
+        .btn-gray { background-color: #a5a5a5; color: black; } /* Верхній ряд */
+        .btn-dark { background-color: #333; color: white; } /* Цифри */
+        .btn-orange { background-color: #ff9f0a; color: white; } /* Операції */
+        button:active { opacity: 0.7; }
+        .num-0 { grid-column: span 2; width: 142px; border-radius: 40px; text-align: left; padding-left: 25px; }
+        input[type="number"] { background: transparent; border: 1px solid #333; color: white; text-align: right; width: 100%; font-size: 1.2rem; margin-bottom: 5px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="calc-body">
+    <form method="post">
+        {% csrf_token %}
+        <input type="number" name="num1" placeholder="Число А" required>
+        <input type="number" name="num2" placeholder="Число В">
+        
+        <div class="screen">
+            {% if result %} {{ result }} {% else %} 0 {% endif %}
+        </div>
+
+        <div class="btn-grid">
+            <button type="reset" class="btn-gray">C</button>
+            <button type="submit" name="operation" value="plus_minus" class="btn-gray">+/-</button>
+            <button type="submit" name="operation" value="extra" class="btn-gray">√A</button> 
+            <button type="submit" name="operation" value="div" class="btn-orange">÷</button>
+
+            <button type="submit" name="operation" value="7" class="btn-dark" onclick="return false;">7</button>
+            <button type="submit" name="operation" value="8" class="btn-dark" onclick="return false;">8</button>
+            <button type="submit" name="operation" value="9" class="btn-dark" onclick="return false;">9</button>
+            <button type="submit" name="operation" value="mul" class="btn-orange">×</button>
+
+            <button type="submit" name="operation" value="4" class="btn-dark" onclick="return false;">4</button>
+            <button type="submit" name="operation" value="5" class="btn-dark" onclick="return false;">5</button>
+            <button type="submit" name="operation" value="6" class="btn-dark" onclick="return false;">6</button>
+            <button type="submit" name="operation" value="sub" class="btn-orange">−</button>
+
+            <button type="submit" name="operation" value="1" class="btn-dark" onclick="return false;">1</button>
+            <button type="submit" name="operation" value="2" class="btn-dark" onclick="return false;">2</button>
+            <button type="submit" name="operation" value="3" class="btn-dark" onclick="return false;">3</button>
+            <button type="submit" name="operation" value="add" class="btn-orange">+</button>
+
+            <button type="submit" name="operation" value="0" class="btn-dark num-0" onclick="return false;">0</button>
+            <button type="submit" name="operation" value="dot" class="btn-dark" onclick="return false;">,</button>
+            <button type="submit" name="operation" value="equal" class="btn-orange">=</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
