@@ -1,23 +1,36 @@
 import math
 
 def calculate_logic(a, b, operation):
-    if operation == 'add':
-        return a + b
-    elif operation == 'sub':
-        return a - b
-    elif operation == 'mul':
-        return a * b
-    elif operation == 'div':
-        return a / b if b != 0 else "Помилка: ділення на нуль"
-    elif operation == 'extra':
-        # корінь квадратний (a > 0)
-        return math.sqrt(a)
-    return None
+    try:
+        # Конвертуємо вхідні дані
+        num_a = float(a) if a and a.strip() != '' else 0.0
+        num_b = float(b) if b and b.strip() != '' else 0.0
 
-def format_to_three_decimal_places(value):
-    if isinstance(value, str):
-        return value
-    # Форматування без математичного округлення
-    s = "{:.10f}".format(float(value))
-    main_part, decimal_part = s.split('.')
-    return f"{main_part}.{decimal_part[:3]}"
+        res = None
+        if operation == 'add':
+            res = num_a + num_b
+        elif operation == 'sub':
+            res = num_a - num_b
+        elif operation == 'mul':
+            res = num_a * num_b
+        elif operation == 'div':
+            if num_b == 0: return "Помилка: / 0"
+            res = num_a / num_b
+        elif operation == 'extra':
+            # Спеціальна функція за умовою a > 0
+            if num_a < 0: return "Помилка: a < 0"
+            res = math.sqrt(num_a)
+        elif operation == 'plus_minus':
+            res = num_a * -1
+        
+        # Застосовуємо форматування до 3 знаків перед поверненням
+        return format_result(res) if res is not None else None
+            
+    except (ValueError, TypeError):
+        return "Помилка вводу"
+
+def format_result(value):
+    if isinstance(value, (int, float)):
+        # f"{value:.3f}" гарантує рівно три знаки після коми
+        return "{:.3f}".format(value)
+    return value
